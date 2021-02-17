@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/niko/Documents/ProjectEuler/ProjectEuler.csproj": {}
+    "/home/niko/Documents/Projects/ProjectEuler_NET5.0/ProjectEuler.csproj": {}
   },
   "projects": {
-    "/home/niko/Documents/ProjectEuler/ProjectEuler.csproj": {
+    "/home/niko/Documents/Projects/ProjectEuler_NET5.0/ProjectEuler.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/niko/Documents/ProjectEuler/ProjectEuler.csproj",
+        "projectUniqueName": "/home/niko/Documents/Projects/ProjectEuler_NET5.0/ProjectEuler.csproj",
         "projectName": "ProjectEuler",
-        "projectPath": "/home/niko/Documents/ProjectEuler/ProjectEuler.csproj",
+        "projectPath": "/home/niko/Documents/Projects/ProjectEuler_NET5.0/ProjectEuler.csproj",
         "packagesPath": "/home/niko/.nuget/packages/",
-        "outputPath": "/home/niko/Documents/ProjectEuler/obj/",
+        "outputPath": "/home/niko/Documents/Projects/ProjectEuler_NET5.0/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/niko/.nuget/NuGet/NuGet.Config"
@@ -52,7 +52,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/112/sdk/5.0.103/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.103/RuntimeIdentifierGraph.json"
         }
       }
     }

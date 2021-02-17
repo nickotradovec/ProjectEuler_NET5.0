@@ -21,32 +21,39 @@ namespace ProjectEuler {
         
             double x;
             short side = 0;   
-            double phi;        
+            double phi;  
+            int earlyExit;      
             while  (increment < evals) {
                 
                 x = 1D;
-                //side = 0;
-                phi = Phi0(increment / evals);
-                Evaluate(ref phi, ref x, ref side);
+                side = 0;
+                earlyExit = 0;
+                phi = Phi0((double)increment / evals);
+                Evaluate(ref phi, ref x, ref side, ref earlyExit);
 
                 if (side == 2 && x >= (0.5D - threshhold) && x <= (0.5D + threshhold) ) {
-                    
+                    Console.WriteLine($"x1: {increment}/{evals}, x[half] = {x}");
                 }
-                
-                Console.WriteLine($"x1: {increment}/{evals}, x[half] = {x}");
+                         
                 increment += 1;
             }                    
         } 
 
-        public void Evaluate(ref double phi, ref double x, ref short side)
+        public void Evaluate(ref double phi, ref double x, ref short side, ref int earlyExit)
         {
             int reflectedCount = 0;
                 
-            while (reflectedCount <= (reflections + 1)/2)
+            while (reflectedCount < (reflections + 1)/2)
             {             
                 Next(ref phi, ref x, ref side);
+
+                if (x < threshhold || x > (1-threshhold)) {
+                    earlyExit = reflectedCount;
+                    return;
+                }
+
                 reflectedCount += 1;
-                Console.WriteLine($"Side: {side}\t x: {x}");
+                //Console.WriteLine($"Side: {side}\t x: {x}");
             }
         }
 
@@ -105,7 +112,7 @@ namespace ProjectEuler {
         }
 
         public double Phi0(double x1) {
-            return Math.PI/6 - (Math.Acos((1 - (2 * x1)/Math.Sqrt(3))));
+            return Math.Atan(Math.Sqrt(3)/((2/(1-x1)) - 1));
         }
     }
 }

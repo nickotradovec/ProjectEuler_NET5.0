@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xRP8CUX2nNzlVYXN3JcTTHcMQJw9RJQ04cDOGEV6BLhpC00KrbEYdjZsayfaPikl3sPcaHOqh5LIlCkMxRyVUQ==",
+  "dgSpecHash": "WzYV3cqA3iw4CE61ciGBp5vtcHgH2sUoRcMLj7MdLtI4j/SWSeGIh93IdMvSwKMRiwKxW+HS3p10VlPBIVr1eg==",
   "success": true,
-  "projectFilePath": "/home/niko/Documents/ProjectEuler/ProjectEuler.csproj",
+  "projectFilePath": "/home/niko/Documents/Projects/ProjectEuler_NET5.0/ProjectEuler.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
