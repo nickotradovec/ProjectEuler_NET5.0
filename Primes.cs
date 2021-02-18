@@ -8,13 +8,16 @@ namespace ProjectEuler
     public class Primes
     {
         public Int64 maxList;
-        public HashSet<long> hstPrimes = new HashSet<long>();
-        public List<long> lstPrimes = new List<long>();
+        public HashSet<long> hstPrimes;
+        public List<long> lstPrimes;
 
         //public Boolean blnCachePrimeFactorization = false;
         //private Dictionary<Int64, List<Int64>> cachePrimeFactorization = new Dictionary<long, List<long>>();
         public Primes(long maxComplete) {
             maxList = maxComplete;
+            int approxPrimeCount = (int)Math.Ceiling((double)maxList / Math.Log(maxList));
+            hstPrimes = new HashSet<long>(approxPrimeCount);
+            lstPrimes = new List<long>(approxPrimeCount);
             SetBySeive();
         }
 
@@ -120,6 +123,20 @@ namespace ProjectEuler
             get {
                 return (long)Math.Pow(maxList, 2);
             }
+        }
+
+        public bool HaveCommonFactor(long val1, long val2, ref long minCommonFactor) {
+
+            if (val1  < val2) {throw new Exception("val1 should be greater than val2");}
+            if (val1 % val2 == 0) {minCommonFactor = val2; return true;}
+
+            var factorization = PrimeFactorization(val2);
+
+            foreach(var factor in factorization) {
+                if (val1 % factor == 0) { minCommonFactor = factor; return true; }
+            }
+
+            return false;
         }
     }
 }
