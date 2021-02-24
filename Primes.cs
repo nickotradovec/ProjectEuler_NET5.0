@@ -77,6 +77,50 @@ namespace ProjectEuler
             return lstFactorization;
         }
 
+        // *** Returns prime factorization in arry indexed by prime number seq.
+        // if passed in with values already partially populated, effectively multiplies values
+        public void PrimeFactorization_ArrIdx(long number, ref int[] values, int maxPrimeEvaluate = -1) {
+         
+            int idx = 0;
+            while ( number > 1 ) {
+                
+                if (idx >= values.Length) { Array.Resize(ref values, values.Length+1); }
+                if (number % lstPrimes[idx] == 0) {
+                    values[idx] += 1;
+                    number /= lstPrimes[idx];             
+                } else { 
+                    idx ++; 
+                    // in some cases, we may not care about primes greater than a specified value.
+                    if (maxPrimeEvaluate > 0 && ( idx >= lstPrimes.Count || lstPrimes[idx] > maxPrimeEvaluate)) {break;}
+                }
+            } 
+        }
+
+        public SortedDictionary<int, int> PrimeFactorization_SD(long number) {
+            
+            var lstFactorization = new SortedDictionary<int, int>();
+            int idx = 0;
+            long current = number;
+            long priorFactor = -1;
+
+            while ( current > 1 ) {
+
+                if ( current % lstPrimes[idx] == 0 ) {
+                    if (lstPrimes[idx] == priorFactor) {
+                        lstFactorization[(int)lstPrimes[idx]] += 1;
+                    } else {
+                        lstFactorization.Add((int)lstPrimes[idx], 1);
+                        priorFactor = lstPrimes[idx];
+                    }
+                    current /= lstPrimes[idx];
+                } else {             
+                    priorFactor = lstPrimes[idx];
+                    idx ++;
+                }
+            } 
+            return lstFactorization;
+        }
+
         public long DivisorCount(long number) {
 
             long divisorCount = 1;
@@ -95,6 +139,12 @@ namespace ProjectEuler
             }
             return divisorCount;
         }
+
+        /* public int PrimeCountLessThanEqualTo(long val) {
+            int count = 0;
+            while (lstPrimes[count] <= val) {count ++; }
+            return count;
+        } */
 
         public List<long> Divisors(long number, bool proper) {
 

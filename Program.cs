@@ -7,7 +7,7 @@ namespace ProjectEuler
         static void Main(string[] args)
         {
             DateTime dtmStart = DateTime.Now;
-            ISolve problem = new PE202_6();           
+            ISolve problem = new PE154_6();           
             
             problem.SetData();
             Console.WriteLine("Initial data set.");

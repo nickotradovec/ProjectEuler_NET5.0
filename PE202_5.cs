@@ -9,7 +9,6 @@ namespace ProjectEuler {
         const long reflections = 1000001;
         private Primes primes;
         private long C;
-        private long E;
 
         public void SetData () {          
 

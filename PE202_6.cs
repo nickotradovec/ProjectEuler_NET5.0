@@ -24,7 +24,7 @@ namespace ProjectEuler {
             eMax = EMax();     
             eMin = EMin(eMax);
 
-            // We'll start considering all values
+            // We'll start considering all values, then subtract off invalid values.
             count = ((eMax-eMin) / 3) + 1;
 
             evaluatedFactors = new HashSet<long>();
@@ -32,38 +32,18 @@ namespace ProjectEuler {
 
         public void Solve () {
                  
-            AdditionalFactors(1, cFactorization);
-            Console.WriteLine($"Count: {count * 2}");
-        } 
-
-        public void AdditionalFactors(long currentVal, List<long> remainingFactors) {
-
-            if (currentVal > 1) {EvaluateFactor(currentVal);}
-
-            for(int i =0; i<remainingFactors.Count; i++) {
-                
-                List<long> newFactors = new List<long>(remainingFactors.Count - 1);
-                long newVal = currentVal;
-
-                for(int j=0; j<remainingFactors.Count; j++) {
-                    if (i ==j) {
-                        newVal *= remainingFactors[j];
-                    } else {
-                        newFactors.Add(remainingFactors[j]);
-                    }               
-                }
-                AdditionalFactors(newVal, newFactors);
+            foreach(long factor in cFactorization) {
+                EvaluateFactor(factor);
             }
 
-        }
+            Console.WriteLine($"Count: {count * 2}");
+        } 
 
         public void EvaluateFactor(long factor) {
 
             if (FactorsContainValue(factor)) {return;}
             long testVal = (factor * (long)Math.Floor(((double)eMin - 1) / factor)) + factor;
             if (testVal > eMax) {return;}
-
-            //count -= (long)(Math.Floor((double)eMax - testVal) / (3 * factor));
 
             // add back factors doubly removed
             int i = 1;
