@@ -51,9 +51,7 @@ namespace ProjectEuler {
                     // now we need to get a combination of all possible 'folds' to count.
                     // This requires x > y,z while still x < maxSize
 
-                    if ()
-                    
-                    i ++;
+                    //i ++;
                 } while (true);
 
                 Console.WriteLine($"Pythagorean Triple: [{triple.a},{triple.b},{triple.c}], \tCount: {tripleCount}");

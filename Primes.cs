@@ -96,6 +96,42 @@ namespace ProjectEuler
             } 
         }
 
+        public bool Reduce(ref long int1, ref long int2) {
+            bool reduced = false;
+            int i = 0;
+            while ( lstPrimes[i] <= Math.Min(int1, int2) ) {
+                if (int1 % lstPrimes[i] == 0 && int2 % lstPrimes[i] == 0) {
+                    int1 /= lstPrimes[i];
+                    int2 /= lstPrimes[i];
+                    reduced = true;
+                } else { i++; }              
+            }
+            return reduced;
+        }
+
+        public bool IsReducable(long int1, long int2) {
+            int i = 0;
+            while ( lstPrimes[i] <= Math.Min(int1, int2) ) {
+                if (int1 % lstPrimes[i] == 0 && int2 % lstPrimes[i] == 0) {
+                    return true;
+                } else { i++; }              
+            }
+            return false;
+        }
+
+        public long GCD(long int1, long int2) {
+            long gcd = 1;
+            int i = 0;
+            while ( lstPrimes[i] < Math.Min(int1, int2) ) {
+                if (int1 % lstPrimes[i] == 0 && int2 % lstPrimes[i] == 0) {
+                    int1 /= lstPrimes[i];
+                    int2 /= lstPrimes[i];
+                    gcd *= lstPrimes[i];
+                } else { i++; }              
+            }
+            return gcd;
+        }
+
         public SortedDictionary<int, int> PrimeFactorization_SD(long number) {
             
             var lstFactorization = new SortedDictionary<int, int>();
@@ -139,12 +175,6 @@ namespace ProjectEuler
             }
             return divisorCount;
         }
-
-        /* public int PrimeCountLessThanEqualTo(long val) {
-            int count = 0;
-            while (lstPrimes[count] <= val) {count ++; }
-            return count;
-        } */
 
         public List<long> Divisors(long number, bool proper) {
 
