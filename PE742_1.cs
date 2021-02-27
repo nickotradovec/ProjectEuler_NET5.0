@@ -7,7 +7,7 @@ using System.Linq;
 namespace ProjectEuler {
     public class PE742_1 : ISolve {
 
-        public const int sides = 100;
+        public const int sides = 96;
         public double minArea = 20000D; // Starting value should well exceed expected solutions.           
         public Primes primes;
         public Polygon minPolygon;        
@@ -56,7 +56,10 @@ namespace ProjectEuler {
             
 
             Polygon newTestPolygon;
-            for(int y = 1; y < sides/4; y++) {
+            int yMax = 1;
+            if (currentPolygon.vertices.Count > 5) { yMax = sides/8; }
+
+            for(int y = 1; y <= yMax; y++) {
                 for(int x = y; x < Math.Min(y/currentPolygon.Slope, (double)sides/8); x++) {
                                              
                     if (primes.IsReducable(x, y)) {continue;}
