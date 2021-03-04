@@ -39,11 +39,24 @@ namespace ProjectEuler {
             minSegments.Add(new Segment(1, 1));
             Reflect(ref minSegments);
 
-            int testQuantity = 20; // this means highest 10 positions will be substituted with lowest 20 available values
-            var tests = ChooseFour(testQuantity*2);// ChooseThree(testQuantity*2);
+            // TEST PARAMETERS
+            int testQuantity = 30; // this means highest 10 positions will be substituted with lowest 20 available values
+            int substituteQuantity = 5;
+            bool symmetric = true;
 
+            int[][] tests;
+            switch (substituteQuantity) {
+                case 3 :
+                    tests = ChooseThree(testQuantity); break;
+                case 4 : 
+                    tests = ChooseFour(testQuantity); break;
+                case 5 : 
+                    tests = ChooseFive(testQuantity); break;
+                default : throw new Exception("Invalid quantity.");
+            }
+            
             List<Segment> testSegs;
-            int minSwapIndex = sides/8 - 1 - 4;
+            int minSwapIndex = sides/8 - 1 - substituteQuantity;
             int[,] arc;
             double area;
 
@@ -54,17 +67,17 @@ namespace ProjectEuler {
                 for(int j=0; j<test.Length; j++) {
                     testSegs[minSwapIndex + j] = segments[minSwapIndex+test[j]];
                 }
-
-                Reflect(ref testSegs);
+               
+                if(symmetric) {Reflect(ref testSegs);} // Reflecting at this point will force symmetry.
+                
                 testSegs.Sort(new SegmentSort_Slope());
                 arc = Arc(testSegs);
                 area = Area(arc);
                 if (area < minArea) {
-                    Console.WriteLine($"Min area: {area} found at vals: ({test[0]},{test[1]},{test[2]})");
+                    Console.WriteLine($"Min area: {area} found at vals: ({test[0]},{test[1]},{test[2]},{test[3]})");
                     minArea = area;
-                }
+                } //else { Console.WriteLine($"Delta: {area - minArea}"); }
             }
-
 
             Console.WriteLine(minArea);               
         }
@@ -163,6 +176,24 @@ namespace ProjectEuler {
                         for(int l=k+1; l<quantity; l++) {                      
                             combinations[idx] = new int[]{i,j,k,l};
                             idx++;
+                        }
+                    }
+                }
+            }
+            return combinations;
+        }
+
+        public int[][] ChooseFive(int quantity) {
+            var combinations = new int[quantity*(quantity-1)*(quantity-2)*(quantity-3)*(quantity-4)][];
+            int idx = 0;
+            for(int i=0; i<quantity; i++) {
+                for(int j=i+1; j<quantity; j++) {
+                    for(int k=j+1; k<quantity; k++) {  
+                        for(int l=k+1; l<quantity; l++) {     
+                            for(int m=l+1; m<quantity; m++) {
+                                combinations[idx] = new int[]{i,j,k,l,m};
+                            idx++;
+                            }                                            
                         }
                     }
                 }
