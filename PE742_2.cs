@@ -40,7 +40,7 @@ namespace ProjectEuler {
             Reflect(ref minSegments);
 
             // TEST PARAMETERS
-            int testQuantity = 30; // this means highest 10 positions will be substituted with lowest 20 available values
+            int testQuantity = 30;
             int substituteQuantity = 5;
             bool symmetric = true;
 
@@ -68,7 +68,7 @@ namespace ProjectEuler {
                     testSegs[minSwapIndex + j] = segments[minSwapIndex+test[j]];
                 }
                
-                if(symmetric) {Reflect(ref testSegs);} // Reflecting at this point will force symmetry.
+                if(symmetric) {Reflect(ref testSegs);}
                 
                 testSegs.Sort(new SegmentSort_Slope());
                 arc = Arc(testSegs);
