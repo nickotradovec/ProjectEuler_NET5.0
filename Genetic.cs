@@ -16,10 +16,22 @@ namespace ProjectEuler {
 
             for(int i=0; i<generations; i++) {
                 Console.WriteLine($"Evaluating generation: {i}, population size: {population.Count}");
-
+                DateTime dtmStart = DateTime.Now;
+                
                 CreateOffspring(ref population, offspringPerParent);
+                DateTime dtmOff = DateTime.Now;
+                
+                              
                 EvaluateDuplicates(ref population);
-                EvaluateSurvival(ref population);              
+                DateTime dtmDup = DateTime.Now;
+                              
+                EvaluateSurvival(ref population); 
+                DateTime dtmSur = DateTime.Now; 
+                
+                //TimeSpan tsOff = dtmOff - dtmStart;
+                //TimeSpan tsDup = dtmDup - dtmOff;
+                //TimeSpan tsSur = dtmSur - dtmDup;
+                //Console.WriteLine($"Generation: {i}, Population: {population.Count}, Create Offspring: {tsOff.TotalSeconds}, Duplicates: {tsDup.TotalSeconds}, Survival: {tsSur.TotalSeconds}");           
             }
 
             mostFit = population[0];
