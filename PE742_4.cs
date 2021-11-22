@@ -7,26 +7,22 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProjectEuler {
-    public class PE742_3 : ISolve {
-
-        // PROBLEM DEFINITION
-        public const int sides = 1000; 
+    public class PE742_4 : ISolve {
 
         // SOLVING PARAMETERS
-        public const int baseSegmentCount = 200; // (sides/4) -1 - baseSegments equals the remainder to be calculated.
+        public const int baseSegmentCount = 149; // (sides/4) -1 - baseSegments equals the remainder to be calculated.
         public const int generations = 5000; // number of generations we will evaluate
-        public static int children = 5;  // number of children each parent will have
-        public const double maxSegmentToConsider = 1.07D; //  as function of max segment needed when sequential
-        public static int maxPopulation = 2000;  
-        public static int minMutations = 1; 
-        public static int maxMutations = 5; 
+        public const int children = 8;  // number of children each parent will have
+        public const double maxSegmentToConsider = 1.14D; //  as function of max segment needed when sequential
 
 
-        // GLOBALS           
-        public Primes primes;       
+        // GLOBALS
+        public const int sides = 1000;     
+        public Primes primes;     
+        public static int auxSegmentCount;  
         public static Random rnd = new Random();
-        public static Segment[] baseSegments;
-        public static Segment[] auxillarySegments;
+        public static Segment[] segmentDef;
+        public static int[] segment_SlopeIdx;   
                 
         public void SetData() {
             primes = new Primes(sides);
@@ -40,34 +36,30 @@ namespace ProjectEuler {
                     segments.Add(new Segment(y, x));
                 }
             }
+            segments.Sort(new SegmentSort_Length());
+            var slopeIdx = new SortedList<double, int>();
+            segmentDef = new Segment[0];
 
-            segments.Sort(new SegmentSort_Length()); 
+            int i=0;
+            while (segments[i].length < segments[(sides/4)].length * maxSegmentToConsider) {
+                Array.Resize(ref segmentDef, segmentDef.Length+1); 
+                segmentDef[i] = segments[i];
+                slopeIdx.Add(segments[i].slope, i);
+                i++;
+            }
+            segment_SlopeIdx = slopeIdx.Values.ToArray<int>();            
 
-            // Build base segments
-            int j=0;
-            baseSegments = new Segment[baseSegmentCount];
-            while(j < baseSegmentCount ) {
-                baseSegments[j] = new Segment(segments[j].points.Item1, segments[j].points.Item2);
-                j++;
-            }
-            
-            // build auxillary segments
-            var auxSegList = new List<Segment>();
-            while(segments[j].length < segments[(sides/4)].length * maxSegmentToConsider) {
-                auxSegList.Add(new Segment(segments[j].points.Item1, segments[j].points.Item2));
-                j++;
-            }
-            auxillarySegments = auxSegList.ToArray();
+            auxSegmentCount = (sides/4) - 1 - baseSegmentCount;
         }
 
         public void Solve() {
             
             // Create our initial parent.
-            var starting = RandomPositions((sides/4)-1-baseSegmentCount, auxillarySegments.Length);
+            //var starting = RandomPositions((sides/4)-1-baseSegmentCount, auxillarySegments.Length); // -1?
             
             // Try seeding from optimized.
-            //var starting = new int[(sides/4)-1-baseSegmentCount];
-            //for(int i=0; i<starting.Length; i++) { starting[i] = i; }
+            var starting = new int[(sides/4)-1-baseSegmentCount];
+            for(int i=0; i<starting.Length; i++) { starting[i] = i; }
 
             var OG = new Polygon(starting);
            
@@ -130,16 +122,15 @@ namespace ProjectEuler {
             
             private int[,] Arc {
                 get {
-                    var segList = new SortedList<double, Segment>((sides/4)-1);
-                    for(int i=0; i<baseSegments.Length; i++) {
-                        segList.Add(baseSegments[i].slope, baseSegments[i]);
-                    }                   
-                    for(int i=0; i<auxillarySegmentIndices.Length; i++) {
-                        segList.Add(auxillarySegments[auxillarySegmentIndices[i]].slope, auxillarySegments[auxillarySegmentIndices[i]]);
+                    var segs = new List<Segment>((sides/4)-1);
+                    
+                    Segment seg;
+                    for(int i=0; i<((sides/4) - 1); i++) {
+                        //seg = auxillarySegments[auxillarySegmentIndices[i]];
+                        //segs.Add(new Segment(seg.points.Item1, seg.points.Item2));
                     }
-                    Segment[] segs = segList.Values.ToArray();
 
-                    //segs.Sort(new SegmentSort_Slope());
+                    segs.Sort(new SegmentSort_Slope());
 
                     int[,] arc = new int[(sides/4),2];
                     int x=0; int y=0;
@@ -148,7 +139,7 @@ namespace ProjectEuler {
                     do {
                         arc[j,0] = x;
                         arc[j,1] = y;
-                        if (j >= segs.Length) {break;}
+                        if (j >= segs.Count) {break;}
                         x += segs[j].points.Item1;
                         y += segs[j].points.Item2;
                         j++;
@@ -190,7 +181,9 @@ namespace ProjectEuler {
             // These would include segments such as 1,1, 2,1, etc and other shorter length sides and their inverses.
             // Next the polygon will have so many other sides that are composed of the remaining sides.
             // Thus, a polygon is really defined as a set of base segments along with auxillary segments
-     
+            public int maxPopulation = 1200;  
+            public int minMutations = 1; 
+            public int maxMutations = 12;      
             //public BreedPolygons() { }
 
             public override void CreateOffspring(ref List<Polygon> pop, int children) {
@@ -207,8 +200,8 @@ namespace ProjectEuler {
                         child = pop[p].Copy();
                         
                         swapsides = rnd.Next(minMutations,maxMutations);
-                        auxPos = RandomPositions(swapsides, (sides/4) - 1 - baseSegments.Length);
-                        auxSegs = RandomPositions(swapsides, auxillarySegments.Length - 1, pop[p].auxillarySegmentIndices);                       
+                        auxPos = RandomPositions(swapsides, auxSegmentCount);
+                        auxSegs = RandomPositions(swapsides, 0, pop[p].auxillarySegmentIndices);                       
 
                         for(int j=0; j<auxSegs.Length; j++) {
                             child.SetAuxSegment(auxPos[j], auxSegs[j]);
@@ -220,10 +213,10 @@ namespace ProjectEuler {
 
             public override void EvaluateDuplicates(ref List<Polygon> pop) {
                 
-                DateTime dtmStart = DateTime.Now;
+                //DateTime dtmStart = DateTime.Now;
                 pop.Sort(new PolygonSort_Area());
-                DateTime dtmSort = DateTime.Now;
-                int countRemoved = 0;
+                //DateTime dtmSort = DateTime.Now;
+                //int countRemoved = 0;
 
                 int i=1;
                 while (i < pop.Count) {
@@ -231,24 +224,28 @@ namespace ProjectEuler {
                         // Need to investigate further.
                         if (pop[i].Equals(pop[i-1])) { 
                             pop.RemoveAt(i);
-                            countRemoved++;
+                            //countRemoved++;
                         }
                         else { i++; }
                     } else {
                         i++;
                     }
                 }
-                DateTime dtmEnd = DateTime.Now;
+                //DateTime dtmEnd = DateTime.Now;
 
-                TimeSpan tsSort = dtmSort - dtmStart;
-                TimeSpan tsDup = dtmEnd - dtmSort;
-                Console.WriteLine($"Sorting: {tsSort.TotalSeconds}, Duplicates: {tsDup.TotalSeconds}, Removed: {countRemoved}");
+                //TimeSpan tsSort = dtmSort - dtmStart;
+                //TimeSpan tsDup = dtmEnd - dtmSort;
+                //Console.WriteLine($"Sorting: {tsSort.TotalSeconds}, Duplicates: {tsDup.TotalSeconds}, Removed: {countRemoved}");
             }
 
             public override void EvaluateSurvival(ref List<Polygon> pop) {
                 // For now, just consider the top maxPopulation.
                 Console.WriteLine($"Min Area found: {pop[0].Area}");
+
                 if (pop.Count < maxPopulation) {return;}
+
+                // TODO: Remove values greater than a percentage over the minimum.
+
                 pop.RemoveRange(maxPopulation, pop.Count - maxPopulation);
             }
         }
@@ -273,7 +270,6 @@ namespace ProjectEuler {
         }
         public class SegmentSort_Slope : IComparer<Segment> {
             public int Compare(Segment a, Segment b) {
-                if (a.slope == b.slope) { throw new Exception($"DUPLICATE SLOPE FOUND! Segment a: ({a.points.Item1},{a.points.Item2}),Segment b: ({b.points.Item1},{b.points.Item2})"); }
                 if (a.slope > b.slope) { return 1;}
                 return -1;
             }

@@ -11,7 +11,7 @@ namespace ProjectEuler {
         //public event EventHandler generationEvaluated;
 
         public void Optimize(ref T mostFit, int generations, int offspringPerParent) {
-            // do stuff
+
             population.Add(mostFit);
 
             for(int i=0; i<generations; i++) {
@@ -28,10 +28,10 @@ namespace ProjectEuler {
                 EvaluateSurvival(ref population); 
                 DateTime dtmSur = DateTime.Now; 
                 
-                //TimeSpan tsOff = dtmOff - dtmStart;
-                //TimeSpan tsDup = dtmDup - dtmOff;
-                //TimeSpan tsSur = dtmSur - dtmDup;
-                //Console.WriteLine($"Generation: {i}, Population: {population.Count}, Create Offspring: {tsOff.TotalSeconds}, Duplicates: {tsDup.TotalSeconds}, Survival: {tsSur.TotalSeconds}");           
+                TimeSpan tsOff = dtmOff - dtmStart;
+                TimeSpan tsDup = dtmDup - dtmOff;
+                TimeSpan tsSur = dtmSur - dtmDup;
+                Console.WriteLine($"Generation: {i}, Population: {population.Count}, Create Offspring: {tsOff.TotalSeconds}, Duplicates: {tsDup.TotalSeconds}, Survival: {tsSur.TotalSeconds}");           
             }
 
             mostFit = population[0];
