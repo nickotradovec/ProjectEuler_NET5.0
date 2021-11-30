@@ -157,6 +157,37 @@ namespace ProjectEuler
             return lstFactorization;
         }
 
+        public SortedDictionary<int, int> PrimeFactorization_SD(long number, int maxPrimeFactor, out bool factorComplete) {
+            
+            var lstFactorization = new SortedDictionary<int, int>();
+            int idx = 0;
+            long current = number;
+            long priorFactor = -1;
+
+            while ( current > 1 ) {
+
+                if( lstPrimes[idx] > maxPrimeFactor) {
+                    factorComplete = false;
+                    return lstFactorization;
+
+                }else if ( current % lstPrimes[idx] == 0 ) {
+                    if (lstPrimes[idx] == priorFactor) {
+                        lstFactorization[(int)lstPrimes[idx]] += 1;
+                    } else {
+                        lstFactorization.Add((int)lstPrimes[idx], 1);
+                        priorFactor = lstPrimes[idx];
+                    }
+                    current /= lstPrimes[idx];
+                } else {             
+                    priorFactor = lstPrimes[idx];
+                    idx ++;
+                }
+            } 
+
+            factorComplete = true;
+            return lstFactorization;
+        }
+
         public long DivisorCount(long number) {
 
             long divisorCount = 1;
