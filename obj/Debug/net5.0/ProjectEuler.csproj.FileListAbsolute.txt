@@ -21,7 +21,6 @@
 /home/niko/Documents/Projects/ProjectEuler_NET5.0/bin/Debug/net5.0/ProjectEuler.dll
 /home/niko/Documents/Projects/ProjectEuler_NET5.0/bin/Debug/net5.0/ref/ProjectEuler.dll
 /home/niko/Documents/Projects/ProjectEuler_NET5.0/bin/Debug/net5.0/ProjectEuler.pdb
-/home/niko/Documents/Projects/ProjectEuler_NET5.0/obj/Debug/net5.0/ProjectEuler.csprojAssemblyReference.cache
 /home/niko/Documents/Projects/ProjectEuler_NET5.0/obj/Debug/net5.0/ProjectEuler.GeneratedMSBuildEditorConfig.editorconfig
 /home/niko/Documents/Projects/ProjectEuler_NET5.0/obj/Debug/net5.0/ProjectEuler.AssemblyInfoInputs.cache
 /home/niko/Documents/Projects/ProjectEuler_NET5.0/obj/Debug/net5.0/ProjectEuler.AssemblyInfo.cs
@@ -30,3 +29,4 @@
 /home/niko/Documents/Projects/ProjectEuler_NET5.0/obj/Debug/net5.0/ref/ProjectEuler.dll
 /home/niko/Documents/Projects/ProjectEuler_NET5.0/obj/Debug/net5.0/ProjectEuler.pdb
 /home/niko/Documents/Projects/ProjectEuler_NET5.0/obj/Debug/net5.0/ProjectEuler.genruntimeconfig.cache
+/home/niko/Documents/Projects/ProjectEuler_NET5.0/obj/Debug/net5.0/ProjectEuler.csproj.AssemblyReference.cache

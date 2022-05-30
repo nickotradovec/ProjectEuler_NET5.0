@@ -34,5 +34,15 @@ namespace ProjectEuler {
             foreach ( var item in list ) { rtn += item; }
             return rtn;
         }
-    }
+
+        public static string ArrayAsString(int[] current) {
+            string str = "";
+            foreach( int w in current) {
+                str += $"{w},";
+            }
+            if (str.Length > 0) {str = str.Remove(str.Length-1);}
+            return str;
+        }
+        
+    }   
 }

@@ -77,6 +77,20 @@ namespace ProjectEuler
             return lstFactorization;
         }
 
+        public long SmallestPrime(long number) {
+
+            int idx = 0;
+
+            while ( true ) {
+
+                if ( number % lstPrimes[idx] == 0 ) {
+                    return lstPrimes[idx];                  
+                }
+                idx ++;
+            } 
+            // return number;
+        }
+
         // *** Returns prime factorization in arry indexed by prime number seq.
         // if passed in with values already partially populated, effectively multiplies values
         public void PrimeFactorization_ArrIdx(long number, ref int[] values, int maxPrimeEvaluate = -1) {
