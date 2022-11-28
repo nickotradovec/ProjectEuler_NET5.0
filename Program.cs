@@ -7,9 +7,11 @@ namespace ProjectEuler
         static void Main(string[] args)
         {
             DateTime dtmStart = DateTime.Now;
-            ISolve problem = new PE742_2();
+            ISolve problem = new PE808_2();
             problem.SetData();
-            Console.WriteLine("Initial data set.");
+
+            TimeSpan tspInitLength = DateTime.Now - dtmStart;
+            Console.WriteLine($"Initial data set. Time elapsed: {tspInitLength.TotalSeconds}");
 
             problem.Solve();
 
@@ -18,8 +20,8 @@ namespace ProjectEuler
         }
     }
 
-    public interface ISolve
-    {
+    public interface ISolve {
+
         void SetData();
         void Solve();
     }

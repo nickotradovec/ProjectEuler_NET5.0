@@ -22,7 +22,7 @@ namespace ProjectEuler
         }
 
         private void SetBySeive() {
-            Boolean[] seive = new Boolean[maxList + 1]; // because of defaulting, true wil mean not prime
+            Boolean[] seive = new Boolean[maxList + 1]; // because of defaulting, true will mean not prime
             for (long i=2; i<maxList; i++) {
                 
                 // if the number itself is not prime, we will have already gone through the divisors
@@ -40,14 +40,14 @@ namespace ProjectEuler
                     hstPrimes.Add(i);
                     lstPrimes.Add(i);
                 }
-            }
+            }          
         }
 
         public Boolean IsPrime(long number) {
             if ( number <= maxList ) {
                 return hstPrimes.Contains(number);
-
-            } else if ( number < maxTest ) {
+                    
+            } else if ( number < maxTest ) { // we can actually verify primes up to the square of the max prime we've computed.
                 int idx = 0;
                 long test = lstPrimes[idx];
                 do {
@@ -55,7 +55,7 @@ namespace ProjectEuler
                     if ( number % test == 0 ) { return false; }
                 } while( test <= Math.Ceiling(Math.Sqrt(number)) );
                 return true;
-            }
+            } 
             throw new Exception("Can not test number larger than the max initialized squared!");
         }
 
