@@ -81,7 +81,7 @@ namespace ProjectEuler {
             var chrRvs = new char[chr.Length];
             for(int i = chr.Length - 1; i>= 0; i--)
             {
-                chrRvs[chr.Length - i - 1] = chr[i];
+                chrRvs[chr.Length - i - 1] = chr[i];       
             }
             return new string(chrRvs);
         }

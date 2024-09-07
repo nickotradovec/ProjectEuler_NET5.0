@@ -7,7 +7,7 @@ namespace ProjectEuler
         static void Main(string[] args)
         {
             DateTime dtmStart = DateTime.Now;
-            ISolve problem = new PE808_2();
+            ISolve problem = new PE894_1();
             problem.SetData();
 
             TimeSpan tspInitLength = DateTime.Now - dtmStart;
